@@ -8,4 +8,11 @@
         android:id="@+id/homeFragment"
         android:name="com.igonris.features.home.ui.HomeFragment"
         android:label="HomeFragment" />
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.igonris.features.splash.ui.SplashFragment"
+        android:label="SplashFragment">
+
+    </fragment>
 </navigation>

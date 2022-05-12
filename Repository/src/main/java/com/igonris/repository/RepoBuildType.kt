@@ -1,4 +1,4 @@
-package com.igonris.repository.configuration
+package com.igonris.repository
 
 enum class RepoBuildType {
     LOCAL, REMOTE

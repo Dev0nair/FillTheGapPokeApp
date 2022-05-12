@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="Features/src/main/res/layout/fragment_home.xml" value="0.32447916666666665" />
+        <entry key="Features/src/main/res/layout/fragment_splash.xml" value="0.32447916666666665" />
+        <entry key="Features/src/main/res/layout/item_list_pokemon.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.32447916666666665" />
       </map>
     </option>
@@ -13,5 +15,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.32447916666666665" />
+      </ProjectState>
+    </option>
   </component>
 </project>
