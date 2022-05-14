@@ -1,8 +1,9 @@
 package com.igonris.features.home.di
 
-import com.igonris.features.home.domain.GetPokemonInfoUseCase
+import com.igonris.features.detail.domain.GetPokemonInfoUseCase
 import com.igonris.features.home.domain.GetPokesUseCase
-import com.igonris.repository.pokemonrepository.PokemonRepository
+import com.igonris.features.home.domain.IGetPokesUseCase
+import com.igonris.repository.pokemon.PokemonRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,8 +14,5 @@ import dagger.hilt.android.components.ViewModelComponent
 object HomeModule {
 
     @Provides
-    fun getPokesUseCase(pokemonRepository: PokemonRepository): GetPokesUseCase = GetPokesUseCase(pokemonRepository)
-
-    @Provides
-    fun getPokeInfoUseCase(pokemonRepository: PokemonRepository): GetPokemonInfoUseCase = GetPokemonInfoUseCase(pokemonRepository)
+    fun getPokesUseCase(pokemonRepository: PokemonRepository): IGetPokesUseCase = GetPokesUseCase(pokemonRepository)
 }

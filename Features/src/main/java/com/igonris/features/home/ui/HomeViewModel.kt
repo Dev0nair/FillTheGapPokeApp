@@ -4,19 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.igonris.common.ErrorType
 import com.igonris.common.MyDispatchers
-import com.igonris.common.ResultType
-import com.igonris.features.home.domain.GetPokesUseCase
-import com.igonris.repository.pokemonrepository.bo.PokemonShortInfoBO
+import com.igonris.common.types.ErrorType
+import com.igonris.common.types.ResultType
+import com.igonris.features.home.domain.IGetPokesUseCase
+import com.igonris.repository.pokemon.bo.PokemonShortInfoBO
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val myDispatchers: MyDispatchers,
-    private val getPokesUseCase: GetPokesUseCase
+    private val getPokesUseCase: IGetPokesUseCase
 ) : ViewModel() {
 
     private val _listData = MutableLiveData<List<PokemonShortInfoBO>>()
@@ -33,10 +35,9 @@ class HomeViewModel @Inject constructor(
     private var canLoadAnotherPage: Boolean = true
 
     fun getListData(reset: Boolean = false) {
-        if (!canLoadAnotherPage) return
+        if (!canLoadAnotherPage && !reset) return
 
         viewModelScope.launch(myDispatchers.io) {
-
             if (reset) {
                 canLoadAnotherPage = true
                 actualPage = 0
@@ -44,7 +45,8 @@ class HomeViewModel @Inject constructor(
 
             val offset = actualPage * pageSize
 
-            getPokesUseCase.invoke(pageSize, offset)
+            getPokesUseCase(pageSize, offset)
+                .flowOn(myDispatchers.io)
                 .collect { result ->
                     when (result) {
                         is ResultType.Success -> onSuccess(result.data)
@@ -53,29 +55,35 @@ class HomeViewModel @Inject constructor(
                     }
                 }
         }
+
     }
 
-    private fun onLoading(loading: Boolean) {
-        viewModelScope.launch(myDispatchers.main) {
+    private suspend fun onLoading(loading: Boolean) {
+        withContext(myDispatchers.main) {
             _loading.postValue(loading)
         }
     }
 
-    private fun onError(error: ErrorType) {
+    private suspend fun onError(error: ErrorType) {
         onLoading(false)
-        viewModelScope.launch(myDispatchers.main) {
+
+        withContext(myDispatchers.main) {
             _errors.postValue(error)
         }
     }
 
-    private fun onSuccess(list: List<PokemonShortInfoBO>) {
+    private suspend fun onSuccess(list: List<PokemonShortInfoBO>) {
         onLoading(false)
-        viewModelScope.launch(myDispatchers.main) {
+        withContext(myDispatchers.main) {
             actualPage++
             if (list.size < pageSize) {
                 canLoadAnotherPage = false
             }
-            _listData.postValue(list)
+
+            val newList = ArrayList(_listData.value ?: emptyList())
+            newList.addAll(list)
+
+            _listData.postValue(newList)
         }
     }
 

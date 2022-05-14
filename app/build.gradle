@@ -15,7 +15,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.igonris.features.HiltTestRunner"
     }
 
     buildTypes {
@@ -41,6 +41,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
+    implementation project(path: ':Common')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -50,4 +51,7 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:2.37"
 
     implementation project(path: ':Features')
+
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+
 }

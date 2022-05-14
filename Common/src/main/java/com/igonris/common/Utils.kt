@@ -8,7 +8,7 @@ import java.nio.charset.Charset
 object Utils {
     fun getJsonFromAssets(context: Context, fileName: String): String? {
         val jsonString: String = try {
-            val asset: InputStream = context.getAssets().open(fileName)
+            val asset: InputStream = context.assets.open(fileName)
             val size: Int = asset.available()
             val buffer = ByteArray(size)
             asset.read(buffer)
