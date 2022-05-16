@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">PokeApp</string>
+    <string name="abilities">Habilidades</string>
+    <string name="types">Tipo</string>
+    <string name="home">Inicio</string>
+    <string name="pokemon_detail">Detalle de pokemon</string>
+    <string name="search_pokemon">Buscar pokemon</string>
+    <string name="number" translatable="false">#%s</string>
+    <string name="name_number" translatable="false">%s #%s</string>
+</resources>

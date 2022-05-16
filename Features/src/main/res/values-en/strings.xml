@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PokeApp</string>
+    <string name="abilities">Abilities</string>
+    <string name="types">Type</string>
+    <string name="home">Home</string>
+    <string name="pokemon_detail">Pokemon Detail</string>
+    <string name="search_pokemon">Search pokemon</string>
+</resources>
