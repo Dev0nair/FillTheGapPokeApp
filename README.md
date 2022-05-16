@@ -3,7 +3,7 @@
 There are 4 modules:
 
 1. App Module: This module is practically the launcher of the application, which only includes the Application class for Hilt and the MainActivity.
-2. Features Module: This module is based on the features developed in the application, which includes the Home & Details screens which refers to the main pokemon list and the pokemon detail screen.
+2. Features Module: This module is based on the features developed in the application, which includes the Home & Details screens which refers to the main pokemon list and the pokemon detail screen. You can configure with a single constant where to get the data: LOCAL(local json), REMOTE (the API).
 3. Repository Module: This module is based on the repository both remote and local/mocked data.
 4. Common Module: This last module, includes all the common elements in the applications, like String formats, extensions, base classes, error types...
 
