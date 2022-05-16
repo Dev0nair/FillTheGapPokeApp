@@ -12,7 +12,7 @@ import com.igonris.features.databinding.ItemListPokemonBinding
 import com.igonris.repository.pokemon.bo.PokemonShortInfoBO
 
 class HomeListAdapter(
-    private val onItemClick: (Int, View, View) -> Unit
+    private val onItemClick: (Int, View, View, View) -> Unit
 ): RecyclerView.Adapter<HomeListAdapter.HomeListHolder>() {
 
     private val items = ArrayList<PokemonShortInfoBO>()
@@ -34,7 +34,8 @@ class HomeListAdapter(
         holder.binding.root.setOnClickListener {
             holder.binding.pokeImage.transitionName = "poke_image_big"
             holder.binding.pokeName.transitionName = "poke_name_big"
-            onItemClick(item.id, holder.binding.pokeImage, holder.binding.pokeName)
+            holder.binding.root.transitionName = "poke_view_big"
+            onItemClick(item.id, holder.binding.pokeImage, holder.binding.pokeName, holder.binding.root)
         }
     }
 

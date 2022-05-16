@@ -1,7 +1,6 @@
 package com.igonris.features.detail.ui
 
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +10,7 @@ import com.igonris.common.base.BasicListView
 import com.igonris.common.extensions.firstUpperThenLower
 import com.igonris.features.R
 import com.igonris.features.databinding.FragmentDetailBinding
+import com.igonris.features.detail.viewmodel.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

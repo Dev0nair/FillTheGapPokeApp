@@ -1,9 +1,8 @@
-package com.igonris.features.home.ui
+package com.igonris.features.home.viewmodel
 
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.igonris.common.MyDispatchers
 import com.igonris.common.base.BaseViewModel
 import com.igonris.common.base.Navigation
@@ -12,9 +11,7 @@ import com.igonris.features.R
 import com.igonris.features.home.domain.IGetPokesUseCase
 import com.igonris.repository.pokemon.bo.PokemonShortInfoBO
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -75,14 +72,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onPokemonClick(id: Int, pokeImg: View, pokeName: View) {
+    fun onPokemonClick(id: Int, pokeImg: View, pokeName: View, cardView: View) {
         navigate(
             Navigation(
                 dest = R.id.home_to_detail,
                 args = listOf("pokeId" to id),
                 sharedElements = listOf(
                     pokeImg to "poke_image_big",
-                    pokeName to "poke_name_big"
+                    pokeName to "poke_name_big",
+                    cardView to "poke_view_big"
                 )
             )
         )

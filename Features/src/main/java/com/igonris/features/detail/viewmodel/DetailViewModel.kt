@@ -1,4 +1,4 @@
-package com.igonris.features.detail.ui
+package com.igonris.features.detail.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

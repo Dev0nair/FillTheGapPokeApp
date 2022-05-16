@@ -4,15 +4,12 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.igonris.common.MyDispatchers
 import com.igonris.common.types.ResultType
 import com.igonris.features.home.domain.IGetPokesUseCase
-import com.igonris.features.home.ui.HomeViewModel
-import com.igonris.repository.pokemon.bo.PokemonShortInfoBO
+import com.igonris.features.home.viewmodel.HomeViewModel
 import com.nhaarman.mockitokotlin2.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

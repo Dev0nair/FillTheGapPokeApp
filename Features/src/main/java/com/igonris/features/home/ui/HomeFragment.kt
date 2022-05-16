@@ -5,17 +5,15 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.igonris.common.base.BaseFragment
 import com.igonris.features.R
 import com.igonris.features.databinding.FragmentHomeBinding
 import com.igonris.features.home.ui.adapter.HomeListAdapter
+import com.igonris.features.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -67,8 +65,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     }
 
     private fun configureView() {
-        pokeAdapter = HomeListAdapter { idPokemon, pokeImg, pokeName ->
-            viewModel.onPokemonClick(idPokemon, pokeImg, pokeName)
+        pokeAdapter = HomeListAdapter { idPokemon, pokeImg, pokeName, cardView ->
+            viewModel.onPokemonClick(idPokemon, pokeImg, pokeName, cardView)
         }
 
         viewBinding.pokeListRV.apply {
