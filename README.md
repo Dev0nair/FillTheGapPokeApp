@@ -2,10 +2,10 @@
 
 There are 4 modules:
 
-App Module: This module is practically the launcher of the application, which only includes the Application class for Hilt and the MainActivity.
-Features Module: This module is based on the features developed in the application, which includes the Home & Details screens which refers to the main pokemon list and the pokemon detail screen.
-Repository Module: This module is based on the repository both remote and local/mocked data.
-Common Module: This last module, includes all the common elements in the applications, like String formats, extensions, base classes, error types...
+1. App Module: This module is practically the launcher of the application, which only includes the Application class for Hilt and the MainActivity.
+2. Features Module: This module is based on the features developed in the application, which includes the Home & Details screens which refers to the main pokemon list and the pokemon detail screen.
+3. Repository Module: This module is based on the repository both remote and local/mocked data.
+4. Common Module: This last module, includes all the common elements in the applications, like String formats, extensions, base classes, error types...
 
 
 - This application is developed with Kotlin, using Clean Architecture + MVVM, Hilt, Coroutines, UseCase Pattern and Repository Pattern. 
