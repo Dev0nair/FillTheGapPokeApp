@@ -5,4 +5,5 @@
     <string name="types">Type</string>
     <string name="home">Home</string>
     <string name="pokemon_detail">Pokemon Detail</string>
+    <string name="search_pokemon">Search pokemon</string>
 </resources>

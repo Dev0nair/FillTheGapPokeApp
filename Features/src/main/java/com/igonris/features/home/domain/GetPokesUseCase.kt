@@ -7,6 +7,7 @@ import com.igonris.repository.pokemon.bo.PokemonShortInfoBO
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 interface IGetPokesUseCase {
     suspend operator fun invoke(size: Int, offset: Int): Flow<ResultType<List<PokemonShortInfoBO>>>
@@ -14,16 +15,19 @@ interface IGetPokesUseCase {
 
 class GetPokesUseCase(
     private val pokemonRepository: PokemonRepository
-): IGetPokesUseCase {
+) : IGetPokesUseCase {
 
-    override suspend operator fun invoke(size: Int, offset: Int): Flow<ResultType<List<PokemonShortInfoBO>>> =
+    override suspend operator fun invoke(
+        size: Int,
+        offset: Int
+    ): Flow<ResultType<List<PokemonShortInfoBO>>> =
         flow {
             coroutineScope {
                 emit(ResultType.Loading())
 
                 val result = pokemonRepository.getPokemonList(limit = size, offset = offset)
 
-                when(result) {
+                when (result) {
                     is ResultType.Success -> emit(
                         ResultType.Success(
                             parsePokemonData(
@@ -42,15 +46,10 @@ class GetPokesUseCase(
         onError: suspend (String) -> Unit
     ): List<PokemonShortInfoBO> {
         return list.mapNotNull { pokemon ->
-            pokemonRepository.getPokemonInfo(
-                pokemon.urlInfo
-                    .dropLast(1)
-                    .split('/')
-                    .last()
-                    .toIntOrNull() ?: 0
-            ).let { pokemonResult ->
-                if(pokemonResult is ResultType.Success) pokemonResult.data.map()
-                else {
+            pokemonRepository.getPokemonInfo(id = pokemon.id).let { pokemonResult ->
+                if (pokemonResult is ResultType.Success) {
+                    pokemonResult.data.map()
+                } else {
                     onError("")
                     null
                 }

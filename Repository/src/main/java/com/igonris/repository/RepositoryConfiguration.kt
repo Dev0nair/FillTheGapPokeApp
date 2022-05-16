@@ -1,6 +1,7 @@
 package com.igonris.repository
 
-object RepositoryConfiguration {
+enum class RepoBuildType { LOCAL, REMOTE }
 
+object RepositoryConfiguration {
     val PokeRepo = RepoBuildType.REMOTE
 }

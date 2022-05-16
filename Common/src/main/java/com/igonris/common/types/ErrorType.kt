@@ -1,6 +1,7 @@
 package com.igonris.common.types
 
-sealed class ErrorType {
+sealed class ErrorType(val desc: String) {
 
-    class APIError(val desc: String): ErrorType()
+    class APIError(desc: String): ErrorType(desc)
+    class Other(desc: String): ErrorType(desc)
 }

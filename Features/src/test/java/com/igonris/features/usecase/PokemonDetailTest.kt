@@ -31,6 +31,7 @@ class PokemonDetailTest {
         val id = 1
         val correctResult = ResultType.Success(
             PokemonFullInfoBO(
+                id = 0,
                 name = "",
                 types = listOf(),
                 abilities = listOf(),

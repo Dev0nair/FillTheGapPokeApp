@@ -20,4 +20,12 @@ object Utils {
         }
         return jsonString
     }
+
+    fun getIdFromURL(urlPokemon: String): Int {
+        return urlPokemon
+            .dropLast(1) // remove last / in URL
+            .split('/') // split by /
+            .last() // get the number in last position
+            .toIntOrNull() ?: 0
+    }
 }

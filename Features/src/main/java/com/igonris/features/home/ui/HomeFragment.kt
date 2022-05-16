@@ -1,26 +1,27 @@
 package com.igonris.features.home.ui
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.igonris.common.types.ErrorType
+import com.igonris.common.base.BaseFragment
 import com.igonris.features.R
 import com.igonris.features.databinding.FragmentHomeBinding
 import com.igonris.features.home.ui.adapter.HomeListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
-    private val viewModel by viewModels<HomeViewModel>()
+    override val viewModel by viewModels<HomeViewModel>()
     private lateinit var viewBinding: FragmentHomeBinding
     private lateinit var pokeAdapter: HomeListAdapter
 
@@ -30,35 +31,49 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        viewBinding = FragmentHomeBinding.inflate(inflater, container, false)
-        return viewBinding.root
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home_menu, menu)
+        (menu.findItem(R.id.search_bar)?.actionView as? SearchView)
+            ?.let { searchView ->
+                searchView.queryHint = getString(R.string.search_pokemon)
+
+                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        viewModel.filterPokemon(searchView.query.toString())
+                        return false
+
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        viewModel.filterPokemon(searchView.query.toString())
+                        return false
+                    }
+                })
+            }
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewBinding = FragmentHomeBinding.bind(view)
 
         configureView()
         setListeners()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("list", pokeAdapter.getItems())
-        super.onSaveInstanceState(outState)
-    }
-
     private fun configureView() {
-        pokeAdapter = HomeListAdapter{ id ->
-            findNavController().navigate(R.id.home_to_detail, bundleOf("pokeId" to id))
+        pokeAdapter = HomeListAdapter { idPokemon, pokeImg, pokeName ->
+            viewModel.onPokemonClick(idPokemon, pokeImg, pokeName)
         }
 
         viewBinding.pokeListRV.apply {
             adapter = pokeAdapter
-            layoutManager = LinearLayoutManager(context).apply {
+            layoutManager = GridLayoutManager(context, 2).apply {
                 orientation = LinearLayoutManager.VERTICAL
             }
         }
@@ -66,24 +81,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun setListeners() {
         viewBinding.pokeListRV.setOnScrollChangeListener { _, _, _, _, _ ->
-            if (pokeAdapter.itemCount > 0 && !viewBinding.pokeListRV.canScrollVertically(1)) {
+            if (!viewBinding.pokeListRV.canScrollVertically(1)) {
                 viewModel.getListData()
             }
         }
 
-        viewModel.loading.observe(viewLifecycleOwner) { loading ->
-            if (loading) {
-                viewBinding.loading.show()
-            } else {
-                viewBinding.loading.hide()
+        viewModel.loading.observe(viewLifecycleOwner) { _loading ->
+            _loading.doIfUnhandled { loading ->
+                if (loading) {
+                    viewBinding.loading.show()
+                } else {
+                    viewBinding.loading.hide()
+                }
             }
         }
 
-        viewModel.errors.observe(viewLifecycleOwner) { error ->
-            when(error) {
-                is ErrorType.APIError -> Log.e(this.tag, error.desc)
-            }
-        }
 
         viewModel.listData.observe(viewLifecycleOwner) { list ->
             pokeAdapter.setItems(list)

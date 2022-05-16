@@ -1,4 +1,4 @@
-package com.igonris.repository
+package com.igonris.repository.di
 
 import android.content.Context
 import com.igonris.common.MyDispatchers

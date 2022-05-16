@@ -10,7 +10,7 @@ import com.igonris.repository.pokemon.dao.PokemonDirDAO
 import com.igonris.repository.pokemon.dao.ResultDao
 import retrofit2.Response
 
-class PokemonAPIImpl(
+class PokemonRemote(
     private val pokemonAPI: PokemonAPI
 ) : PokemonRepository {
     override suspend fun getPokemonList(limit: Int, offset: Int): ResultType<List<PokemonShortInfoBO>> {
@@ -20,7 +20,6 @@ class PokemonAPIImpl(
         } else {
             ResultType.Error(ErrorType.APIError(result.message()))
         }
-
     }
 
     override suspend fun getPokemonInfo(id: Int): ResultType<PokemonFullInfoBO> {
@@ -31,6 +30,5 @@ class PokemonAPIImpl(
             ResultType.Error(ErrorType.APIError(result.message()))
         }
     }
-
 
 }

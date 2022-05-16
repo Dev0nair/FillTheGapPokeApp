@@ -55,12 +55,16 @@ class DetailViewModelTest {
 
     @Test
     fun `needed data for home is fetched`() = runTest {
-        val expected = ResultType.Success(
-            PokemonFullInfoBO(
-                name = "",
-                image = "",
-                abilities = emptyList(),
-                types = emptyList()
+        val expected = flowOf(
+            ResultType.Loading(),
+            ResultType.Success(
+                PokemonFullInfoBO(
+                    id = 0,
+                    name = "",
+                    image = "",
+                    abilities = emptyList(),
+                    types = emptyList()
+                )
             )
         )
 

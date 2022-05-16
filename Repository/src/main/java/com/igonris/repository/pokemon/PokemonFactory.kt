@@ -5,7 +5,7 @@ import com.igonris.repository.RepoBuildType
 import com.igonris.repository.RepositoryConfiguration
 import com.igonris.repository.pokemon.local.PokemonLocal
 import com.igonris.repository.pokemon.remote.PokemonAPI
-import com.igonris.repository.pokemon.remote.PokemonAPIImpl
+import com.igonris.repository.pokemon.remote.PokemonRemote
 
 object PokemonFactory {
 
@@ -18,7 +18,7 @@ object PokemonFactory {
         context: Context
     ): PokemonRepository =
         when(buildType) {
-            RepoBuildType.REMOTE -> PokemonAPIImpl(pokemonAPI)
+            RepoBuildType.REMOTE -> PokemonRemote(pokemonAPI)
             RepoBuildType.LOCAL -> PokemonLocal(context)
         }
 

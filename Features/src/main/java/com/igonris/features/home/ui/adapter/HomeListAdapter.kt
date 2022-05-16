@@ -1,41 +1,40 @@
 package com.igonris.features.home.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.igonris.features.R
 import com.igonris.features.databinding.ItemListPokemonBinding
 import com.igonris.repository.pokemon.bo.PokemonShortInfoBO
 
 class HomeListAdapter(
-    private val onItemClick: (Int) -> Unit
+    private val onItemClick: (Int, View, View) -> Unit
 ): RecyclerView.Adapter<HomeListAdapter.HomeListHolder>() {
 
     private val items = ArrayList<PokemonShortInfoBO>()
 
-    inner class HomeListHolder(val viewBinding: ItemListPokemonBinding): RecyclerView.ViewHolder(viewBinding.root)
+    inner class HomeListHolder(val binding: ItemListPokemonBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeListHolder {
-        val viewBinding = ItemListPokemonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return HomeListHolder(viewBinding)
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return position
-    }
-
-    override fun getItemId(position: Int): Long {
-        return super.getItemId(position)
+        val binding = ItemListPokemonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return HomeListHolder(binding)
     }
 
     override fun onBindViewHolder(holder: HomeListHolder, position: Int) {
         val item = items[position]
 
-        holder.viewBinding.pokeImage.load(item.image)
-        holder.viewBinding.pokeName.text = item.name
+        holder.binding.pokeImage.load(item.image)
+        holder.binding.pokeName.text = item.name
+        holder.binding.pokeN.text = holder.binding.root.context.getString(R.string.number, item.id.toString())
 
-        holder.viewBinding.root.setOnClickListener {
-            onItemClick(position+1)
+        holder.binding.root.setOnClickListener {
+            holder.binding.pokeImage.transitionName = "poke_image_big"
+            holder.binding.pokeName.transitionName = "poke_name_big"
+            onItemClick(item.id, holder.binding.pokeImage, holder.binding.pokeName)
         }
     }
 
@@ -49,20 +48,5 @@ class HomeListAdapter(
         items.clear()
         items.addAll(list)
         notifyDataSetChanged()
-    }
-
-    fun addItems(list: List<PokemonShortInfoBO>) {
-        val count = items.size
-        val notExistingData = list.filterNot { pokemon ->
-            items.any { poke -> poke.name.equals(pokemon) }
-        }
-        items.addAll(items.size, notExistingData)
-        notifyItemRangeInserted(count, notExistingData.size)
-    }
-
-    fun clear() {
-        val count = items.size
-        items.clear()
-        notifyItemRangeRemoved(0, count)
     }
 }
