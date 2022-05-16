@@ -9,10 +9,14 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 
 
-fun Fragment.navigate(dest: Int, params: List<Pair<String, Any>>, sharedElements: List<Pair<View, String>>? = null) {
+fun Fragment.navigate(
+    dest: Int,
+    params: List<Pair<String, Any>>,
+    sharedElements: List<Pair<View, String>>? = null
+) {
     var extras: FragmentNavigator.Extras? = null
 
-    if(sharedElements != null) {
+    if (sharedElements != null) {
         extras = FragmentNavigatorExtras(*sharedElements.toTypedArray())
     }
 

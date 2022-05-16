@@ -7,7 +7,7 @@ import com.igonris.features.home.domain.IGetPokesUseCase
 import com.igonris.features.home.viewmodel.HomeViewModel
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -47,12 +47,12 @@ class HomeViewModelTest {
 
     @Test
     fun `needed data for home is fetched`() = runTest {
-        whenever(getPokesUseCase(15, 0)) doReturn flowOf(
+        whenever(getPokesUseCase(20, 0)) doReturn flowOf(
             ResultType.Success(emptyList())
         )
 
         homeViewModel.getListData(reset = true)
 
-        verify(getPokesUseCase)(15, 0)
+        verify(getPokesUseCase)(20, 0)
     }
 }

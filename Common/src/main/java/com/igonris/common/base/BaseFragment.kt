@@ -1,19 +1,15 @@
 package com.igonris.common.base
 
 import android.os.Bundle
-import android.transition.ChangeBounds
 import android.transition.TransitionInflater
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.igonris.common.R
 import com.igonris.common.extensions.navigate
 import com.igonris.common.extensions.showError
 
-abstract class BaseFragment(@LayoutRes layout: Int): Fragment(layout) {
+abstract class BaseFragment(@LayoutRes layout: Int) : Fragment(layout) {
 
     abstract val viewModel: BaseViewModel
 

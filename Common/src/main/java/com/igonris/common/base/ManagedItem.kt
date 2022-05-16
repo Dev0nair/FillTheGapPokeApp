@@ -7,7 +7,7 @@ class ManagedItem<T>(private val item: T) {
     private fun isHandled() = handled
 
     fun doIfUnhandled(action: (T) -> Unit) {
-        if(!isHandled()) {
+        if (!isHandled()) {
             handled = true
             action(item)
         }

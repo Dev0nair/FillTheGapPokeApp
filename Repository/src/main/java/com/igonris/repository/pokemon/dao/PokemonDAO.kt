@@ -2,7 +2,6 @@ package com.igonris.repository.pokemon.dao
 
 import com.igonris.common.extensions.firstUpperThenLower
 import com.igonris.repository.pokemon.bo.PokemonFullInfoBO
-import com.igonris.repository.pokemon.bo.PokemonShortInfoBO
 
 data class PokemonDAO(
     val id: Int,

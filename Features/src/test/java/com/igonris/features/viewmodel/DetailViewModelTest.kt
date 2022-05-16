@@ -8,7 +8,7 @@ import com.igonris.features.detail.viewmodel.DetailViewModel
 import com.igonris.repository.pokemon.bo.PokemonFullInfoBO
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After

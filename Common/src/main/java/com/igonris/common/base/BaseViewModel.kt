@@ -10,7 +10,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-abstract class BaseViewModel(val myDispatchers: MyDispatchers): ViewModel() {
+abstract class BaseViewModel(val myDispatchers: MyDispatchers) : ViewModel() {
 
     private val _errors = MutableLiveData<ManagedItem<ErrorType>>()
     val errors: LiveData<ManagedItem<ErrorType>> = _errors

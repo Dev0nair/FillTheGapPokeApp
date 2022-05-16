@@ -13,7 +13,7 @@ interface IGetPokemonInfoUseCase {
 
 class GetPokemonInfoUseCase(
     private val pokemonRepository: PokemonRepository
-): IGetPokemonInfoUseCase {
+) : IGetPokemonInfoUseCase {
     override suspend operator fun invoke(id: Int): Flow<ResultType<PokemonFullInfoBO>> =
         flow {
             coroutineScope {

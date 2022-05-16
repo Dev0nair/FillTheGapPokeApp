@@ -7,7 +7,6 @@ import com.igonris.repository.pokemon.bo.PokemonShortInfoBO
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 
 interface IGetPokesUseCase {
     suspend operator fun invoke(size: Int, offset: Int): Flow<ResultType<List<PokemonShortInfoBO>>>

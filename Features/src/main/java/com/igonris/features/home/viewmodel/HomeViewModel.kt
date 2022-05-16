@@ -32,7 +32,6 @@ class HomeViewModel @Inject constructor(
     private var canLoadAnotherPage: Boolean = true
 
 
-
     fun getListData(reset: Boolean = false) {
         if (!canLoadAnotherPage && !reset || filtered) return
 

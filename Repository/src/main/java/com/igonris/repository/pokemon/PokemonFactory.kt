@@ -17,7 +17,7 @@ object PokemonFactory {
         pokemonAPI: PokemonAPI,
         context: Context
     ): PokemonRepository =
-        when(buildType) {
+        when (buildType) {
             RepoBuildType.REMOTE -> PokemonRemote(pokemonAPI)
             RepoBuildType.LOCAL -> PokemonLocal(context)
         }

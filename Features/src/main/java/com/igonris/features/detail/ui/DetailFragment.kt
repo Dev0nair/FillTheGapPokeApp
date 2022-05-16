@@ -14,7 +14,7 @@ import com.igonris.features.detail.viewmodel.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailFragment: BaseFragment(R.layout.fragment_detail) {
+class DetailFragment : BaseFragment(R.layout.fragment_detail) {
 
     override val viewModel: DetailViewModel by viewModels()
     private lateinit var viewBinding: FragmentDetailBinding
@@ -36,14 +36,19 @@ class DetailFragment: BaseFragment(R.layout.fragment_detail) {
         viewModel.pokeInfo.observe(viewLifecycleOwner) { data ->
             viewBinding.pokeImage.load(data.image)
 
-            viewBinding.pokeName.text = getString(R.string.name_number, data.name.firstUpperThenLower(), data.id.toString())
+            viewBinding.pokeName.text =
+                getString(R.string.name_number, data.name.firstUpperThenLower(), data.id.toString())
             viewBinding.abilitiesLv.run {
                 adapter = BasicListView(data.abilities)
-                layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
+                layoutManager = LinearLayoutManager(context).apply {
+                    orientation = LinearLayoutManager.VERTICAL
+                }
             }
             viewBinding.typesLv.run {
                 adapter = BasicListView(data.types)
-                layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
+                layoutManager = LinearLayoutManager(context).apply {
+                    orientation = LinearLayoutManager.VERTICAL
+                }
             }
 
         }

@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
     private val dispatchers: MyDispatchers
-): ViewModel() {
+) : ViewModel() {
 
     private val _goHome = MutableLiveData(false)
     val goHome: LiveData<Boolean> = _goHome

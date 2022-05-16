@@ -2,7 +2,6 @@ package com.igonris.features.detail.di
 
 import com.igonris.features.detail.domain.GetPokemonInfoUseCase
 import com.igonris.features.detail.domain.IGetPokemonInfoUseCase
-import com.igonris.features.home.domain.GetPokesUseCase
 import com.igonris.repository.pokemon.PokemonRepository
 import dagger.Module
 import dagger.Provides
@@ -14,5 +13,6 @@ import dagger.hilt.android.components.ViewModelComponent
 object DetailModule {
 
     @Provides
-    fun getPokeInfoUseCase(pokemonRepository: PokemonRepository): IGetPokemonInfoUseCase = GetPokemonInfoUseCase(pokemonRepository)
+    fun getPokeInfoUseCase(pokemonRepository: PokemonRepository): IGetPokemonInfoUseCase =
+        GetPokemonInfoUseCase(pokemonRepository)
 }

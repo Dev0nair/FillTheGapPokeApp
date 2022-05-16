@@ -7,6 +7,8 @@ import com.igonris.repository.pokemon.PokemonRepository
 import com.igonris.repository.pokemon.bo.PokemonFullInfoBO
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeInstanceOf
 import org.junit.After
@@ -41,11 +43,12 @@ class PokemonDetailTest {
 
         whenever(pokemonRepository.getPokemonInfo(id)) doReturn correctResult
 
-        val result = getPokemonInfoUseCase.invoke(id)
+        val result = getPokemonInfoUseCase.invoke(id).toList()
 
         verify(pokemonRepository).getPokemonInfo(id)
 
-        result shouldBeInstanceOf ResultType.Success::class.java
+        result[0] shouldBeInstanceOf ResultType.Loading::class.java
+        result[1] shouldBeInstanceOf ResultType.Success::class.java
     }
 
     @After
