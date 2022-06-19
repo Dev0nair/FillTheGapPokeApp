@@ -6,7 +6,6 @@ import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.igonris.common.base.BaseFragment
@@ -23,12 +22,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private lateinit var viewBinding: FragmentHomeBinding
     private lateinit var pokeAdapter: HomeListAdapter
 
-    init {
-        lifecycleScope.launchWhenCreated {
-            viewModel.getListData(reset = true)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -44,7 +37,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         viewModel.filterPokemon(searchView.query.toString())
                         return false
-
                     }
 
                     override fun onQueryTextChange(newText: String?): Boolean {
@@ -71,17 +63,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
         viewBinding.pokeListRV.apply {
             adapter = pokeAdapter
-            layoutManager = GridLayoutManager(context, 2).apply {
-                orientation = LinearLayoutManager.VERTICAL
-            }
+            layoutManager = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
         }
     }
 
     private fun setListeners() {
         viewBinding.pokeListRV.setOnScrollChangeListener { _, _, _, _, _ ->
-            if (!viewBinding.pokeListRV.canScrollVertically(1)) {
-                viewModel.getListData()
-            }
+            viewModel.onScroll(viewBinding.pokeListRV.canScrollVertically(1))
         }
 
         viewModel.loading.observe(viewLifecycleOwner) { _loading ->

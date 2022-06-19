@@ -1,6 +1,6 @@
 package com.igonris.common.base
 
-class ManagedItem<T>(private val item: T) {
+class ManagedItem<T>(val item: T) {
 
     private var handled = false
 

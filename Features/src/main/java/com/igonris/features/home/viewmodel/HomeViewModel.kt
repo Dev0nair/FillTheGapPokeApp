@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(
     private val getPokesUseCase: IGetPokesUseCase
 ) : BaseViewModel(myDispatchers) {
 
-    private val pokeList = ArrayList<PokemonShortInfoBO>()
+    private var pokeList = emptyList<PokemonShortInfoBO>()
     private var filtered = false
 
     private val _listData = MutableLiveData<List<PokemonShortInfoBO>>()
@@ -31,9 +31,18 @@ class HomeViewModel @Inject constructor(
     private var pageSize: Int = 20
     private var canLoadAnotherPage: Boolean = true
 
+    init {
+        getListData(true)
+    }
+
+    fun onScroll(canScroll: Boolean) {
+        if(!canScroll) {
+            getListData()
+        }
+    }
 
     fun getListData(reset: Boolean = false) {
-        if (!canLoadAnotherPage && !reset || filtered) return
+        if (!canLoadAnotherPage && !reset || filtered || isLoading()) return
 
         launchOnIO {
             if (reset) {
@@ -64,10 +73,12 @@ class HomeViewModel @Inject constructor(
             canLoadAnotherPage = false
         }
 
-        pokeList.addAll(list)
+        val actualList: List<PokemonShortInfoBO> = if (_listData.value != null) _listData.value!! else emptyList()
+        val newList = actualList.plus(list)
 
         withContext(myDispatchers.main) {
-            _listData.postValue(pokeList)
+            _listData.postValue(newList)
+            pokeList = newList
         }
     }
 
@@ -97,7 +108,7 @@ class HomeViewModel @Inject constructor(
         val filteredList = pokeList
             .filter { pokemon ->
                 pokemon.id.toString().startsWith(query) ||
-                        pokemon.name.contains(query)
+                        pokemon.name.lowercase().contains(query.lowercase())
             }
             .distinctBy { pokemon ->
                 pokemon.id

@@ -27,6 +27,8 @@ abstract class BaseViewModel(val myDispatchers: MyDispatchers) : ViewModel() {
         }
     }
 
+    fun isLoading(): Boolean = loading.value?.item ?: false
+
     fun launchOnIO(action: suspend () -> Unit) {
         viewModelScope.launch(myDispatchers.io + coroutineExceptionHandler) {
             action()
